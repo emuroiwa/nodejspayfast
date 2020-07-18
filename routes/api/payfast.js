@@ -171,6 +171,67 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// @route    GET api/payfast/inapp
+// @desc     Posting form values to Payfast
+// @access   public
+router.get("/inapp", async (req, res) => {
+  try {
+    var myData = [];
+    // Merchant details
+    myData["merchant_id"] = "10018579";
+    myData["merchant_key"] = "861ou4eazj11v";
+    myData["return_url"] = "http://www.localhost:8080/api/payfast/return_url";
+    myData["cancel_url"] = "http://www.localhost:8080/api/payfast/cancel_url";
+    myData["notify_url"] = "http://www.localhost:8080/api/payfast/notify_url";
+    // Buyer details
+    myData["name_first"] = "First Name";
+    myData["name_last"] = "Last Name";
+    myData["email_address"] = "emuroiwa@gmail.com";
+    myData["m_payment_id"] = yourOrderId;
+    myData["amount"] = "10.00";
+    myData["item_name"] = "Item Name";
+    myData["item_description"] = "Item Description";
+    myData["custom_int1"] = "9586";
+    myData["custom_str1"] =
+      "custom string is passed along with transaction to notify_url page";
+
+    // Create parameter string
+    var pfOutput = "";
+    for (var key in myData) {
+      var value = myData[key];
+      if (value !== "") {
+        pfOutput +=`${key}=${encodeURIComponent(value.trim()).replace(/%20/g, "+")}&`
+      }
+    }
+
+    // Remove last ampersand
+    var getString = pfOutput.slice(0, -1);
+    
+    if (typeof passPhrase !== "undefined") {
+      getString +=`&passphrase=${encodeURIComponent(passPhrase.trim()).replace(/%20/g, "+")}`;
+    }
+
+    var hash = crypto.createHash("md5").update(getString).digest("hex");
+    myData["signature"] = hash;
+
+    var payload = JSON.stringify( myData );
+    axios.post(`https://${pfHost}/eng/process`, {
+        payload
+    })
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 // @route    GET api/payfast/return_url
 // @desc     Page on your site which the buyer sees after successful payment
 // @access   public

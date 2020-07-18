@@ -1,0 +1,18 @@
+<form action="https://transaction.pf.ernest/eng/process" method="POST">
+  <input type="hidden" name="merchant_id" value="10000103" />
+  <input type="hidden" name="merchant_key" value="as42tt4k4iio2" />
+  <input type="hidden" name="return_url" value="http://www.localhost:8080/" />
+  <input type="hidden" name="cancel_url" value="http://www.localhost:8080" />
+  <input
+    type="hidden"
+    name="notify_url"
+    value="http://www.localhost:8080/api/payfast/notify"
+  />
+  <input type="hidden" name="m_payment_id" value="01AB" />
+  <input type="hidden" name="amount" value="100.00" />
+  <input type="hidden" name="item_name" value="Test Item" />
+  <input type="hidden" name="item_description" value="A test product" />
+  <input type="hidden" name="custom_int1" value="2" />
+  <input type="hidden" name="custom_str1" value="Extra order information" />
+  <input type="submit" />
+</form>

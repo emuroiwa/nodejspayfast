@@ -1,6 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://admin:password1*@jobszim-f4iq7.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "password1*",
-  "githubClientId": "e204e0c45728be4c36d1",
-  "githubSecret": "e204e0c45728be4c36d1"
-}
